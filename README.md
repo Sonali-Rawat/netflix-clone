@@ -1,3 +1,3 @@
 # netflix-clone
 
-Source code: 
+Source code: https://github.com/Sonali-Rawat/netflix-clone
