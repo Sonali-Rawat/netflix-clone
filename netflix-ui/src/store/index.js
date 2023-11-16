@@ -12,13 +12,13 @@ const initialState={
     genresLoaded:false,
     genres:[],
 };
-export const getgenres=createAsyncThunk("netflix/genres", async ()=>{
-const {data} = await axios.get(
-    `${TMDB_BASE_URL}/genre/movie/list ?api_key${API_KEY}`
-);
- console.log(data);
-//  return data
-});
+// export const getgenres=createAsyncThunk("netflix/genres", async ()=>{
+// const {data} = await axios.get(
+//     `${TMDB_BASE_URL}/genre/movie/list ?api_key${API_KEY}`
+// );
+//  console.log(data);
+// //  return data
+// });
 
 export const getGenres=createAsyncThunk("netflix/genres",async()=>{
     const {data:{genres}}=await axios.get(`${TMDB_BASE_URL}/genre/movie/list?api_key=${API_KEY}`
@@ -56,20 +56,36 @@ const getRawdata= async (api, genres, paging=false) => {
     }= await axios.get(`${api}${paging?`&page=${i}`:""}`
      );
      creatArrayFromRawData(results, moviesArray, genres);
-     return moviesArray;
     }
-}
+    return moviesArray;
 
-export const fetchMovies=createAsyncThunk("netflix/trending",async({type},thunkApi)=>{
-    const {
+};
+
+export const fetchMovies=createAsyncThunk(
+    "netflix/trending",
+    async({type},thunkApi)=>{
+        const {
         netflix:{genres},
         }=thunkApi.getState();
         return getRawdata(`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
         genres,
         true
-        );
-        
+        );   
 }
+);
+
+export const fetchDataByGenre=createAsyncThunk(
+    "netflix/moviesByGenres",async({genre,type},thunkApi)=>{
+        console.log("in fetch data",genre,type)
+        const {
+        netflix:{genres},
+        }=thunkApi.getState();
+        const data = getRawdata(
+            `${TMDB_BASE_URL}/discover${type}?api_key=${API_KEY}&with_genres=${genre}`,
+        genres
+        );   
+        return data;
+        }
 );
 // return getRawdata(`${TMDB_BASE_URL}/discover${type}?api_key=${API_KEY}&with_genres=${genre}`)
 
@@ -85,7 +101,9 @@ const NetflixSlice=createSlice({
     builder.addCase(fetchMovies.fulfilled,(state,action)=>{
         state.movies=action.payload;
     });
-
+    builder.addCase(fetchDataByGenre.fulfilled,(state,action)=>{
+        state.movies=action.payload;
+    });
     },
 });
 export const store = configureStore({
