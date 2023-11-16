@@ -1,11 +1,13 @@
 import React from 'react';
-
-const CardSlider = ({data,title}) => {
+import Card from './Card';
+export default function CardSlider ({data,title})  {
     return (
-        data.map((movie,index)=>{
+        <div>
+
+          { data.map((movie,index)=>{
             return <Card movieData={movie} index={index} key={movie.id}/>;
-        })
+        })}
+        </div>
     );
 }
 
-export default CardSlider;
