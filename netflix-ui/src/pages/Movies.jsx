@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import NotAvailable from '../components/NotAvailable';
 import SelectGenre from '../components/SelectGenre';
 
-export default function MoviePage () {
+export default function Movies() {
     const [isScrolled,setIsScrolled]=useState(false);
     const genresLoaded = useSelector((state)=>state.netflix.genresLoaded);
     const movies = useSelector((state) => state.netflix.movies);
@@ -28,10 +28,10 @@ export default function MoviePage () {
       if(genresLoaded){
        dispatch(fetchMovies({type:"movie"}));
       }
-    },[genresLoaded]);
+    });
    
    window.onscroll=()=>{
-    setIsScrolled(window.pageYOffset ===0 ? false : true);
+    setIsScrolled(window.scrollY ===0 ? false : true);
     return ()=> (window.onscroll=null);
    };
 
