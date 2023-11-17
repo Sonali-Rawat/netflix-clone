@@ -9,7 +9,7 @@ import {API_KEY,TMDB_BASE_URL} from "../utils/constants";
 const initialState={
     movies:[],
     genresLoaded:false,
-    genres:[],
+    genres:[], 
 };
 export const getGenres=createAsyncThunk("netflix/genres", async ()=>{
 const {data} = await axios.get(
