@@ -28,7 +28,7 @@ export default function Movies() {
       if(genresLoaded){
        dispatch(fetchMovies({type:"movie"}));
       }
-    });
+    },[genresLoaded]);
    
    window.onscroll=()=>{
     setIsScrolled(window.scrollY ===0 ? false : true);
