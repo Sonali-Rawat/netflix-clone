@@ -30,14 +30,19 @@ export default function Movies() {
       }
     },[genresLoaded]);
    
+  //   const [user, setUser] = useState(undefined);
+ 
+ 
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      // if (currentUser) setUser(currentUser.uid);
+      // else navigate("/login");
+   });
+
    window.onscroll=()=>{
     setIsScrolled(window.scrollY ===0 ? false : true);
     return ()=> (window.onscroll=null);
    };
 
-   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // if (currentUser) navigate("/");
-  });
    
     return (
         <Container> 
