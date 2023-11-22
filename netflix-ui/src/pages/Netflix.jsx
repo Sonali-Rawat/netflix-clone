@@ -2,6 +2,9 @@ import React,{useEffect, useState} from "react";
 import Navbar from "../components/Navbar";
 import backgroundImage from "../assets/home.jpg";
 import MovieLogo from "../assets/homeTitle.webp";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
 import {FaPlay} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
 import {AiOutlineInfoCircle} from "react-icons/ai";
@@ -24,9 +27,14 @@ export default function Netflix() {
   useEffect(()=>{
     if(genresLoaded) dispatch(fetchMovies({type:"all"}));
   },[genresLoaded]);
+
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (!currentUser) navigate("/login");
+  });
+
  
  window.onscroll=()=>{
-  setIsScrolled(window.pageYOffset===0 ? false : true);
+  setIsScrolled(window.scrollY===0 ? false : true);
   return ()=> (window.onscroll=null);
  };
 
