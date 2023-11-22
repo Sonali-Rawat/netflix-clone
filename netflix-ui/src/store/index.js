@@ -10,7 +10,7 @@ import {API_KEY,TMDB_BASE_URL} from "../utils/constants";
 const initialState={
     movies:[],
     genresLoaded:false,
-    genres:[],
+    genres:[], 
 };
 
 
